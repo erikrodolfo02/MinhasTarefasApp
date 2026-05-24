@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined"
+      rel="stylesheet"
+    />
+    <title>Minhas Tarefas</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        width: 100%;
+        height: 100vh;
+        background-image: linear-gradient(45deg, #1f1f1f, #0f110c);
+        font-family: Arial, Helvetica, sans-serif;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+      }
+
+      main {
+        background-color: #f2f2f2;
+        width: 90%;
+        margin: 0 auto;
+        padding: 20px;
+        border-radius: 8px;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <h1>Gerenciador de Tarefas</h1>
+      <p>para organizar suas tarefas diárias de forma simples e eficiente.</p>
+    </header>
+    <main>
+      <h2>Minhas Tarefas</h2>
+      <a href="{% url 'criar_tarefa' %}"
+        >Nova Tarefa <span class="material-symbols-outlined"> add </span></a
+      >
+      <table>
+        <tr>
+          <th>Nome</th>
+          <th>Status</th>
+          <th>Ações</th>
+        </tr>
+        {% for tarefa in tarefas %}
+        <tr>
+          <td><strong>{{ tarefa.nome }}</strong></td>
+          <td>{{ tarefa.status }}</td>
+          <td>
+            <a href="{% url 'editar_tarefa' tarefa.id %}">
+              <span class="material-symbols-outlined"> edit </span>
+            </a>
+            <a href="{% url 'deletar_tarefa' tarefa.id %}">
+              <span class="material-symbols-outlined"> delete_forever </span>
+            </a>
+          </td>
+        </tr>
+        {% endfor %}
+      </table>
+    </main>
+  </body>
+</html>

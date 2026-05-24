@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Formulário de Tarefas</title>
+  </head>
+  <body>
+    <form method="post">
+      {% csrf_token %}
+
+      <!--Título da tarefa-->
+      <input
+        type="text"
+        name="nome"
+        placeholder="Nome da tarefa"
+        value="{{ tarefa.nome|default:'' }}"
+        required
+      />
+      <!--Descrição-->
+      <textarea name="descricao" placeholder="Descrição da tarefa">
+{{ tarefa.descricao|default:'' }}</textarea
+      >
+
+      <!--Data de início-->
+      <input
+        type="date"
+        name="data_criacao"
+        id="data_criacao"
+        value="{{ tarefa.data_criacao|default:'' }}"
+        required
+      />
+
+      <!--Status-->
+      <select name="status" id="status">
+        <option value="pendente">Pendente</option>
+        <option value="em_andamento">Em andamento</option>
+        <option value="concluida">Concluída</option>
+      </select>
+
+      <!--Botão-->
+      <button type="submit">Salvar</button>
+    </form>
+  </body>
+</html>
