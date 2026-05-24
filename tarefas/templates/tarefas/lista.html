@@ -24,6 +24,27 @@
         justify-content: center;
         align-items: center;
         flex-direction: column;
+        position: relative;
+      }
+
+      header {
+        padding: 20px;
+        position: fixed;
+        top: 0;
+        width: 100%;
+        text-align: center;
+        margin-bottom: 20px;
+        color: #f2f2f2;
+      }
+
+      header h1 {
+        font-size: 1.5rem;
+        text-transform: uppercase;
+        margin-bottom: 10px;
+      }
+
+      header p {
+        font-size: 0.9rem;
       }
 
       main {
@@ -32,17 +53,69 @@
         margin: 0 auto;
         padding: 20px;
         border-radius: 8px;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+      }
+
+      .new-task-btn {
+        background-color: #1c66a6;
+        font-size: 1rem;
+        font-weight: bold;
+        width: 100%;
+        padding: 10px;
+        color: #f2f2f2;
+        text-decoration: none;
+        text-align: center;
+        border-radius: 4px;
+        display: inline-flex;
+        justify-content: center;
+        align-items: center;
+        gap: 5px;
+      }
+
+      table {
+        width: 100%;
+        border-collapse: collapse;
+      }
+
+      th {
+        text-align: center;
+        padding: 10px;
+        background-color: #1f1f1f;
+        color: #f2f2f2;
+      }
+
+      td {
+        background-color: #d8d8d8;
+        padding: 10px;
+        text-align: center;
+      }
+
+      td a {
+        color: #1c66a6;
+        text-decoration: none;
+        margin-right: 10px;
+      }
+
+      .material-symbols-outlined {
+        font-size: 1.2rem;
+        color: #1c66a6;
+      }
+
+      .delete-btn {
+        color: #e74c3c;
       }
     </style>
   </head>
   <body>
     <header>
       <h1>Gerenciador de Tarefas</h1>
-      <p>para organizar suas tarefas diárias de forma simples e eficiente.</p>
+      <p>Para organizar suas tarefas diárias de forma simples e eficiente.</p>
     </header>
     <main>
       <h2>Minhas Tarefas</h2>
-      <a href="{% url 'criar_tarefa' %}"
+      <a href="{% url 'criar_tarefa' %}" class="new-task-btn"
         >Nova Tarefa <span class="material-symbols-outlined"> add </span></a
       >
       <table>
@@ -54,13 +127,15 @@
         {% for tarefa in tarefas %}
         <tr>
           <td><strong>{{ tarefa.nome }}</strong></td>
-          <td>{{ tarefa.status }}</td>
+          <td>{{ tarefa.get_status_display }}</td>
           <td>
             <a href="{% url 'editar_tarefa' tarefa.id %}">
               <span class="material-symbols-outlined"> edit </span>
             </a>
             <a href="{% url 'deletar_tarefa' tarefa.id %}">
-              <span class="material-symbols-outlined"> delete_forever </span>
+              <span class="material-symbols-outlined delete-btn">
+                delete_forever
+              </span>
             </a>
           </td>
         </tr>
