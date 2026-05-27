@@ -24,31 +24,34 @@
         justify-content: center;
         align-items: center;
         flex-direction: column;
-        position: relative;
+      }
+
+      .wrap {
+        width: 100%;
+        max-width: 900px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
       }
 
       header {
-        padding: 20px;
-        position: fixed;
-        top: 0;
-        width: 100%;
-        text-align: center;
-        margin-bottom: 20px;
+        width: 90%;
         color: #f2f2f2;
+        margin-bottom: 20px;
       }
 
       header h1 {
-        font-size: 1.5rem;
-        text-transform: uppercase;
-        margin-bottom: 10px;
+        font-size: 1.8rem;
+        color: #259C00;
       }
 
       header p {
         font-size: 0.9rem;
+        color: #dcdcdc;
       }
 
       main {
-        background-color: #f2f2f2;
+        background-color: #FBFFFF;
         width: 90%;
         margin: 0 auto;
         padding: 20px;
@@ -58,89 +61,120 @@
         gap: 10px;
       }
 
-      .new-task-btn {
-        background-color: #1c66a6;
-        font-size: 1rem;
-        font-weight: bold;
-        width: 100%;
-        padding: 10px;
-        color: #f2f2f2;
+      a {
         text-decoration: none;
-        text-align: center;
-        border-radius: 4px;
-        display: inline-flex;
-        justify-content: center;
+      }
+
+      .delete-button {
+        color: #e74c3c;
+      }
+
+      .edit-button {
+        color: #3498db;
+      }
+
+      a.new-task-button {
+        width: 100%;
+        display: inline-block;
+        margin-bottom: 15px;
+        padding: 10px 15px;
+        background-color: #259C00;
+        color: white;
+        display: flex;
+        justify-content: space-between;
         align-items: center;
-        gap: 5px;
+        font-weight: bold;
+        border-radius: 4px;
+      }
+
+      a.new-task-button:hover {
+        background-color: #45a049;
+      }
+
+      a.new-task-button:active {
+        background-color: #1e7e00;
       }
 
       table {
+        background-color: #f9f5ff;
         width: 100%;
         border-collapse: collapse;
+        border-radius: 8px;
       }
 
       th {
-        text-align: center;
         padding: 10px;
-        background-color: #1f1f1f;
-        color: #f2f2f2;
+        text-align: center;
+        border-right: 1px solid #ccc;
+      }
+
+      th:last-child {
+        border-right: none;
       }
 
       td {
-        background-color: #d8d8d8;
-        padding: 10px;
         text-align: center;
+        padding: 10px;
+        background-color: #f2f2f2;
+        border-bottom: 1px solid #ccc;
       }
 
-      td a {
-        color: #1c66a6;
-        text-decoration: none;
-        margin-right: 10px;
-      }
+      @media (min-width: 600px) {
 
-      .material-symbols-outlined {
-        font-size: 1.2rem;
-        color: #1c66a6;
-      }
+        header {
+          text-align: center;
+        }
 
-      .delete-btn {
-        color: #e74c3c;
+        header h1 {
+          text-transform: uppercase;
+          font-size: 2.5rem;
+        }
+
+        header p {
+          font-size: 1.2rem;
+        }
       }
     </style>
   </head>
   <body>
-    <header>
-      <h1>Gerenciador de Tarefas</h1>
-      <p>Para organizar suas tarefas diárias de forma simples e eficiente.</p>
-    </header>
-    <main>
-      <h2>Minhas Tarefas</h2>
-      <a href="{% url 'criar_tarefa' %}" class="new-task-btn"
-        >Nova Tarefa <span class="material-symbols-outlined"> add </span></a
-      >
-      <table>
-        <tr>
-          <th>Nome</th>
-          <th>Status</th>
-          <th>Ações</th>
-        </tr>
-        {% for tarefa in tarefas %}
-        <tr>
-          <td><strong>{{ tarefa.nome }}</strong></td>
-          <td>{{ tarefa.get_status_display }}</td>
-          <td>
-            <a href="{% url 'editar_tarefa' tarefa.id %}">
-              <span class="material-symbols-outlined"> edit </span>
-            </a>
-            <a href="{% url 'deletar_tarefa' tarefa.id %}">
-              <span class="material-symbols-outlined delete-btn">
-                delete_forever
-              </span>
-            </a>
-          </td>
-        </tr>
-        {% endfor %}
-      </table>
-    </main>
+    <div class="wrap">
+      <header>
+        <h1>Gerenciador de Tarefas</h1>
+        <p>Para organizar suas tarefas diárias de forma simples e eficiente.</p>
+      </header>
+      <main>
+        <h2>Minhas Tarefas</h2>
+        <a href="{% url 'criar_tarefa' %}" class="new-task-button"
+          >Nova Tarefa <span class="material-symbols-outlined"> add </span></a
+        >
+        <table>
+          <tr>
+            <th>Nome</th>
+            <th>Status</th>
+            <th>Ações</th>
+          </tr>
+          {% for tarefa in tarefas %}
+          <tr class="tasks-list">
+              <td><strong>{{ tarefa.nome }}</strong></td>
+              <td>{{ tarefa.get_status_display }}</td>
+              <td>
+                <a href="{% url 'editar_tarefa' tarefa.id %}">
+                  <span class="material-symbols-outlined edit-button">
+                    edit
+                  </span>
+                </a>
+                <a href="{% url 'deletar_tarefa' tarefa.id %}">
+                  <span class="material-symbols-outlined delete-button">
+                    delete_forever
+                  </span>
+                </a>
+              </td>
+          </tr>
+          {% endfor %}
+        </table>
+      </main>
+    </div>
+
+    {% load django_browser_reload %} {% django_browser_reload_script%}
   </body>
 </html>
